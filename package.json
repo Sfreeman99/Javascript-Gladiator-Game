@@ -1,8 +1,8 @@
 {
-    "name": "JS-Template",
+    "name": "Gladiators",
     "version": "1.0.0",
-    "description": "Base Camp Coding Academy template for javascript projects",
-    "author": "Nate Clark",
+    "description": "Gladiator Game Using Javascript",
+    "author": "Shedlia Freeman",
     "license": "MIT",
     "dependencies": {
         "bootstrap": "^3.3.7",
