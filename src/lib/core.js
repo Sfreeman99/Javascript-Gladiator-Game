@@ -17,6 +17,7 @@ function Gladiator(name) {
         // This is how the player can heal if they have enough rage
         if (this.rage >= 15) {
             this.health += 15;
+            this.rage = 0;
         }
         return this.health;
     };
