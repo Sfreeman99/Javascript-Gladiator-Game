@@ -2,7 +2,33 @@ const $ = require('jquery');
 const core = require('../../lib/core');
 const app = $('#app');
 var turnBool = true;
+
+function ProgressBar(attacker, defender) {
+    if (attacker.health < 50 && attacker.health >= 25) {
+        $('#Player1')
+            .removeClass('progress-bar-success')
+            .addClass('progress-bar-warning');
+    }
+    if (attacker.health < 25) {
+        $('#Player1')
+            .removeClass('progress-bar-success')
+            .addClass('progress-bar-danger');
+    }
+
+    if (defender.health < 50 && defender.health >= 25) {
+        $('#Player2')
+            .removeClass('progress-bar-success')
+            .addClass('progress-bar-warning');
+    }
+    if (defender.health < 25) {
+        $('#Player2')
+            .removeClass('progress-bar-success')
+            .addClass('progress-bar-danger');
+    }
+}
+
 function moves(attacker, defender) {
+    ProgressBar(attacker, defender);
     if (attacker.rage < 15) {
         $('#heal').addClass('disabled');
     }
@@ -60,7 +86,7 @@ function view(attacker, defender) {
         "<div class='row'>",
         "<div class='col-lg-6'>",
         "<div class='progress'>",
-        "<div class='progress-bar progress-bar-success' role='progressbar' style='width:" +
+        "<div class='progress-bar progress-bar-success' id='Player1' role='progressbar' style='width:" +
             attacker.health +
             "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Health: " +
             attacker.health +
@@ -69,7 +95,7 @@ function view(attacker, defender) {
         '</div>',
         "<div class='col-lg-6'>",
         "<div class='progress'>",
-        "<div class='progress-bar progress-bar-success' role='progressbar' style='width:" +
+        "<div class='progress-bar progress-bar-success' id='Player2' role='progressbar' style='width:" +
             defender.health +
             "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Health: " +
             defender.health +
