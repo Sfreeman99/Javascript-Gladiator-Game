@@ -24,6 +24,10 @@ describe('Gladiator Attack', function() {
         expect(P2.health).toBeGreaterThanOrEqual(50);
         expect(P2.health).toBeLessThanOrEqual(99);
     });
+    // test('Can hit critical', function () {
+    //     var P1 = new core.Gladiator('foo');
+    //     var P2 = new core.Gladiator('doo');
+    // });
 });
 describe('Gladiator Heal', function() {
     test('Should heal health', function() {
@@ -39,11 +43,11 @@ describe('Gladiator health', function() {
     test('is dead', function() {
         var player = new core.Gladiator();
         player.health = 0;
-        expect(player.isDead()).toEqual('Dead');
+        expect(player.isDead()).toEqual(true);
     });
     test('is alive', function() {
         var player = new core.Gladiator();
         player.health = 1;
-        expect(player.isDead()).toEqual('Alive');
+        expect(player.isDead()).toEqual(false);
     });
 });

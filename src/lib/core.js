@@ -22,28 +22,24 @@ function Gladiator(name) {
     };
     this.attack = function attack(defender) {
         const d = getRandomIntInclusive(this.attackLow, this.attackHigh);
-        const rage = getRandomIntInclusive(1, 100);
-        if (rage < d) {
+        const randInt = getRandomIntInclusive(1, 100);
+        if (randInt < this.rage) {
             this.rage = 0;
             defender.health = defender.health - d * 2;
         } else {
-            defender.health -= d;
             this.rage += 15;
+            defender.health -= d;
         }
     };
     this.isDead = function() {
         if (this.health <= 0) {
-            return 'Dead';
+            return true;
         } else {
-            return 'Alive';
+            return false;
         }
     };
 }
 
-function main() {
-    new Gladiator();
-}
 //________________________JQuery Below ___________________________________________________
 
-$(main);
 exports.Gladiator = Gladiator;
