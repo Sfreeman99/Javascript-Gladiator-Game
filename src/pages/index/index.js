@@ -3,9 +3,15 @@ const core = require('../../lib/core');
 const app = $('#app');
 var turnBool = true;
 function moves(attacker, defender) {
+    if (attacker.rage < 15) {
+        $('#heal').addClass('disabled');
+    }
     $('#attack').click(function() {
         attacker.attack(defender);
-        turn(attacker, defender);
+        GameOver(attacker, defender);
+    });
+    $('#heal').click(function() {
+        attacker.heal();
         GameOver(attacker, defender);
     });
 }
