@@ -44,35 +44,80 @@ function GameOver(attacker, defender) {
 
 function view(attacker, defender) {
     return [
-        '<div row>',
-        "<div class='col-lg-6' id='Player1'><h3>",
-        'Gladiator Name: &nbsp;' +
-            attacker.name +
-            '|| &nbsp;Health: ' +
+        //Both fighters Names
+        "<div class='container'>",
+        "<div class='row'>",
+        "<div class='col-lg-6'><h3>Name: " + attacker.name + '</h3></div>',
+        "<div class='col-lg-6'><h3>Name: " + defender.name + '</h3></div>',
+        '</div>',
+        //Both fighters health bars
+        "<div class='row'>",
+        "<div class='col-lg-6'>",
+        "<div class='progress'>",
+        "<div class='progress-bar progress-bar-success' role='progressbar' style='width:" +
             attacker.health +
-            '|| &nbsp;Rage: ' +
-            attacker.rage +
-            '|| &nbsp; Attack Low: ' +
-            attacker.attackLow +
-            '|| &nbsp; Attack High: ' +
-            attacker.attackHigh +
-            '</h3></div>',
-        "<div class='col-lg-6' id='Player2'><h3>",
-        'Gladiator Name: &nbsp;' +
-            defender.name +
-            '|| &nbsp;Health: ' +
+            "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Health: " +
+            attacker.health +
+            '</div>',
+        '</div>',
+        '</div>',
+        "<div class='col-lg-6'>",
+        "<div class='progress'>",
+        "<div class='progress-bar progress-bar-success' role='progressbar' style='width:" +
             defender.health +
-            '|| &nbsp;Rage: ' +
+            "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Health: " +
+            defender.health +
+            '</div>',
+        '</div>',
+        '</div>',
+        '</div>',
+        // both fighters rage bars
+        "<div class='row'>",
+        "<div class='col-lg-6'>",
+        "<div class='progress'>",
+        "<div class='progress-bar progress-bar-danger' role='progressbar' style='width:" +
+            attacker.rage +
+            "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Rage: " +
+            attacker.rage +
+            '</div>',
+        '</div>',
+        '</div>',
+        "<div class='col-lg-6'>",
+        "<div class='progress'>",
+        "<div class='progress-bar progress-bar-danger' role='progressbar' style='width:" +
             defender.rage +
-            '|| &nbsp; Attack Low: ' +
-            defender.attackLow +
-            '|| &nbsp; Attack High: ' +
-            defender.attackHigh +
-            '</h3></div>',
+            "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Rage: " +
+            defender.rage +
+            '</div>',
+        '</div>',
+        '</div>',
+        '</div>',
+        //Attack Low
+        "<div class='row'>",
+        "<div class='col-lg-6'>",
+        "<div class='well'>",
+        '<h4>Attack Low: ' + attacker.attackLow + '</h4></div>',
+        '</div>',
+        "<div class='col-lg-6'>",
+        "<div class='well'>",
+        '<h4> Attack Low: ' + defender.attackLow + '</h4></div>',
+        '</div>',
+        "<div class='row'></div>",
+        //Attack High
+        "<div class='row'>",
+        "<div class='col-lg-6'>",
+        "<div class='well'>",
+        '<h4>Attack High: ' + attacker.attackHigh + '</h4></div>',
+        '</div>',
+        "<div class='col-lg-6'>",
+        "<div class='well'>",
+        '<h4> Attack High: ' + defender.attackHigh + '</h4></div>',
+        //
         "<div row><div class='col-lg-12' id='moves'>",
         attacker.name +
             " what do you want to do: &nbsp;<button class='btn btn-danger' id='attack'> Attack </button>",
-        "<button class='btn btn-danger' id='heal'> Heal </button>"
+        "<button class='btn btn-danger' id='heal'> Heal </button>",
+        '</div></div>'
     ].join(' ');
 }
 function main() {
