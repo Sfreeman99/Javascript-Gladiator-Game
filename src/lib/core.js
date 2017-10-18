@@ -43,6 +43,7 @@ function Gladiator(name) {
 
 function Saiyan(name) {
     this.level = 0;
+    this.maxHealth = 500;
     this.health = 500; //Starting Point of health
     this.rage = 50; //Starting Rage
     this.attackLow = Math.floor(Math.random() * 50);
@@ -52,11 +53,18 @@ function Saiyan(name) {
     );
     this.heal = function() {
         // This is how the player can heal if they have enough rage
-        if (this.rage >= 30) {
+        if (this.rage >= 30 && this.health === this.maxHealth) {
+            this.health += 0;
+            this.rage -= 0;
+        }
+
+        if (this.rage >= 30 && this.health < this.maxHealth) {
             this.health += 30;
             this.rage -= 30;
+            if (this.health > this.maxHealth) {
+                this.health = this.maxHealth;
+            }
         }
-        return this.health;
     };
     this.attack = function attack(defender) {
         const d = getRandomIntInclusive(this.attackLow, this.attackHigh);
@@ -120,10 +128,11 @@ function Saiyan(name) {
         }
     };
     this.transform = function() {
-        if (this.rage >= 15) {
+        if (this.rage >= 50) {
             this.level += 1;
+            this.maxHealth += 50;
             this.health += 50;
-            this.rage -= 15;
+            this.rage -= 50;
             this.attackLow += 10;
             this.attackHigh += 10;
             this.name = this.forms[this.level].title + ' ' + name; //Name of the person from the form

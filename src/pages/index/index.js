@@ -51,42 +51,70 @@ function image_for(gladiator) {
     }
 }
 
-function moves(attacker, defender) {
-    ProgressBar(attacker, defender);
-    if (attacker.rage < 15) {
+function moves(Gladiator1, Gladiator2) {
+    // ProgressBar(Gladiator1, Gladiator2);
+    if (turnBool === true && Gladiator1.rage < 30) {
         $('#heal').addClass('disabled');
     }
-    if (attacker.rage < 15) {
+    if (turnBool === true && Gladiator1.rage < 50) {
+        $('#transform').addClass('disabled');
+    }
+    if (turnBool === false && Gladiator2.rage < 30) {
+        $('#heal').addClass('disabled');
+    }
+    if (turnBool === false && Gladiator2.rage < 50) {
         $('#transform').addClass('disabled');
     }
     $('#attack').click(function() {
-        attacker.attack(defender);
-        GameOver(attacker, defender);
+        if (turnBool === true) {
+            turnBool = false;
+            Gladiator1.attack(Gladiator2);
+            GameOver(Gladiator1, Gladiator2);
+        } else {
+            turnBool = true;
+            Gladiator2.attack(Gladiator1);
+            GameOver(Gladiator1, Gladiator2);
+        }
     });
     $('#heal').click(function() {
-        attacker.heal();
-        GameOver(attacker, defender);
+        if (turnBool === true) {
+            turnBool = false;
+            Gladiator1.heal();
+            GameOver(Gladiator1, Gladiator2);
+        } else {
+            turnBool = true;
+            Gladiator2.heal();
+            GameOver(Gladiator1, Gladiator2);
+        }
     });
     $('#transform').click(function() {
-        attacker.transform();
-        GameOver(attacker, defender);
+        if (turnBool === true) {
+            turnBool = false;
+            Gladiator1.transform();
+            GameOver(Gladiator1, Gladiator2);
+        } else {
+            turnBool = true;
+            Gladiator2.transform();
+            GameOver(Gladiator1, Gladiator2);
+        }
     });
 }
 function turn(Gladiator1, Gladiator2) {
     if (turnBool === true) {
-        app.html(view(Gladiator1, Gladiator2));
+        ProgressBar(Gladiator1, Gladiator2);
+
+        app.html(view(Gladiator1, Gladiator2) + buttons(Gladiator1));
         moves(Gladiator1, Gladiator2);
-        turnBool = false;
-    }
-    if (turnBool === false) {
-        app.html(view(Gladiator2, Gladiator1));
-        moves(Gladiator2, Gladiator1);
-        turnBool = true;
+    } else {
+        ProgressBar(Gladiator1, Gladiator2);
+
+        app.html(view(Gladiator1, Gladiator2) + buttons(Gladiator2));
+        moves(Gladiator1, Gladiator2);
     }
 }
 
-function GameOver(attacker, defender) {
-    if (defender.isDead() === true) {
+function GameOver(Gladiator1, Gladiator2) {
+    if (Gladiator2.isDead() === true) {
         var finishMove = [
             '<h3> Finishing Move </h3>',
             "<img src='../../assets/ending/end_game.gif' width='75%' height='75%'> "
@@ -94,12 +122,12 @@ function GameOver(attacker, defender) {
         var end = [
             "<div class='row'>",
             "<h1 style='color: Green; text-align: center'> Winner: " +
-                attacker.name +
+                Gladiator1.name +
                 ' </h1>',
             '</div>',
             "<div class='row'>",
             "<h1 style='color: red; text-align: center'> Loser: " +
-                defender.name +
+                Gladiator2.name +
                 ' </h1>',
             '</div>'
         ];
@@ -107,110 +135,140 @@ function GameOver(attacker, defender) {
         setTimeout(function() {
             app.html(end.join(' '));
         }, 3500);
-    } else {
-        turn(attacker, defender);
+    }
+    if (Gladiator1.isDead() === true) {
+        var finishMove = [
+            '<h3> Finishing Move </h3>',
+            "<img src='../../assets/ending/end_game.gif' width='75%' height='75%'> "
+        ];
+        var end = [
+            "<div class='row'>",
+            "<h1 style='color: Green; text-align: center'> Winner: " +
+                Gladiator2.name +
+                ' </h1>',
+            '</div>',
+            "<div class='row'>",
+            "<h1 style='color: red; text-align: center'> Loser: " +
+                Gladiator1.name +
+                ' </h1>',
+            '</div>'
+        ];
+        app.html(finishMove.join(' '));
+        setTimeout(function() {
+            app.html(end.join(' '));
+        }, 3500);
+    }
+    if (Gladiator1.isDead() === false && Gladiator2.isDead() === false) {
+        turn(Gladiator1, Gladiator2);
     }
 }
-
-function view(attacker, defender) {
+function buttons(attacker) {
     return [
-        "<div class='container'>",
-        "<div class='row'>",
-        //Attacker gif
-        "<div class='col-lg-6'>",
-        "<img id='attacker' src='" +
-            image_for(attacker) +
-            "' width='500px' height='250px'>",
-        '</div>',
-        //Defender gif
-        "<div class='col-lg-6'>",
-        "<img id='defender' src='" +
-            image_for(defender) +
-            "' width='500px' height='250px'>",
-        '</div>',
-        '</div>',
-        "<div class='row'>",
-        //Attacker Name
-        "<div class='col-lg-6'><h3>Name: " + attacker.name + '</h3></div>',
-        //Defender Name
-        "<div class='col-lg-6'><h3>Name: " + defender.name + '</h3></div>',
-        '</div>',
-        //Attacker Health
-        "<div class='row'>",
-        "<div class='col-lg-6'>",
-        "<div class='progress'>",
-        "<div class='progress-bar progress-bar-success' id='Player1' role='progressbar' style='width:" +
-            attacker.health / 5 +
-            "%' aria-valuenow='" +
-            attacker.health / 5 +
-            "' aria-valuemin='0' aria-valuemax='500'> Health: " +
-            attacker.health +
-            '</div>',
-        '</div>',
-        '</div>',
-        //Defender Health
-        "<div class='col-lg-6'>",
-        "<div class='progress'>",
-        "<div class='progress-bar progress-bar-success' id='Player2' role='progressbar' style='width:" +
-            defender.health / 5 +
-            "%' aria-valuenow='" +
-            defender.health / 5 +
-            "' aria-valuemin='0' aria-valuemax='500'> Health: " +
-            defender.health +
-            '</div>',
-        '</div>',
-        '</div>',
-        '</div>',
-        // Attacker Rage Bar
-        "<div class='row'>",
-        "<div class='col-lg-6'>",
-        "<div class='progress'>",
-        "<div class='progress-bar progress-bar-danger' role='progressbar' style='width:" +
-            attacker.rage +
-            "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Rage: " +
-            attacker.rage +
-            '</div>',
-        '</div>',
-        '</div>',
-        // Defender Rage
-        "<div class='col-lg-6'>",
-        "<div class='progress'>",
-        "<div class='progress-bar progress-bar-danger' role='progressbar' style='width:" +
-            defender.rage +
-            "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Rage: " +
-            defender.rage +
-            '</div>',
-        '</div>',
-        '</div>',
-        '</div>',
-        //Attacker Attack Low
-        "<div class='row'>",
-        "<div class='col-lg-6'>",
-        "<div class='well'>",
-        '<h4>Attack Low: ' + attacker.attackLow + '</h4></div>',
-        '</div>',
-        // Defender Attack Low
-        "<div class='col-lg-6'>",
-        "<div class='well'>",
-        '<h4> Attack Low: ' + defender.attackLow + '</h4></div>',
-        '</div>',
-        "<div class='row'></div>",
-        //Attacker Attack High
-        "<div class='row'>",
-        "<div class='col-lg-6'>",
-        "<div class='well'>",
-        '<h4>Attack High: ' + attacker.attackHigh + '</h4></div>',
-        '</div>',
-        // Defender Attack High
-        "<div class='col-lg-6'>",
-        "<div class='well'>",
-        '<h4> Attack High: ' + defender.attackHigh + '</h4></div>',
-        //Attacker Buttons
         "<div row><div class='col-lg-12' id='moves'>",
         attacker.name +
             " what do you want to do: &nbsp;<button class='btn btn-danger' id='attack'> Attack </button>",
         "<button class='btn btn-danger' id='heal'> Heal </button>",
         "<button class='btn btn-danger' id='transform'> Transform </button>",
+        '</div></div>'
+    ].join('');
+}
+function view(Gladiator1, Gladiator2) {
+    return [
+        "<div class='container'>",
+        "<div class='row'>",
+        //Gladiator1 gif
+        "<div class='col-lg-6'>",
+        "<img id='Gladiator1' src='" +
+            image_for(Gladiator1) +
+            "' width='500px' height='250px'>",
+        '</div>',
+        //Gladiator2 gif
+        "<div class='col-lg-6'>",
+        "<img id='Gladiator2' src='" +
+            image_for(Gladiator2) +
+            "' width='500px' height='250px'>",
+        '</div>',
+        '</div>',
+        "<div class='row'>",
+        //Gladiator1 Name
+        "<div class='col-lg-6'><h3>Name: " + Gladiator1.name + '</h3></div>',
+        //Gladiator2 Name
+        "<div class='col-lg-6'><h3>Name: " + Gladiator2.name + '</h3></div>',
+        '</div>',
+        //Gladiator1 Health
+        "<div class='row'>",
+        "<div class='col-lg-6'>",
+        "<div class='progress'>",
+        "<div class='progress-bar progress-bar-success' id='Player1' role='progressbar' style='width:" +
+            Gladiator1.health / Gladiator1.maxHealth * 100 +
+            "%' aria-valuenow='" +
+            Gladiator1.health / Gladiator1.maxHealth * 100 +
+            "' aria-valuemin='0' aria-valuemax='500'> Health: " +
+            Math.floor(Gladiator1.health / Gladiator1.maxHealth * 100) +
+            '%' +
+            '</div>',
+        '</div>',
+        '</div>',
+        //Gladiator2 Health
+        "<div class='col-lg-6'>",
+        "<div class='progress'>",
+        "<div class='progress-bar progress-bar-success' id='Player2' role='progressbar' style='width:" +
+            Gladiator2.health / Gladiator2.maxHealth * 100 +
+            "%' aria-valuenow='" +
+            Gladiator2.health / Gladiator2.maxHealth * 100 +
+            "' aria-valuemin='0' aria-valuemax='500'> Health: " +
+            Math.floor(Gladiator2.health / Gladiator2.maxHealth * 100) +
+            '%' +
+            '</div>',
+        '</div>',
+        '</div>',
+        '</div>',
+        // Gladiator1 Rage Bar
+        "<div class='row'>",
+        "<div class='col-lg-6'>",
+        "<div class='progress'>",
+        "<div class='progress-bar progress-bar-danger' role='progressbar' style='width:" +
+            Gladiator1.rage +
+            "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Rage: " +
+            Gladiator1.rage +
+            '</div>',
+        '</div>',
+        '</div>',
+        // Gladiator2 Rage
+        "<div class='col-lg-6'>",
+        "<div class='progress'>",
+        "<div class='progress-bar progress-bar-danger' role='progressbar' style='width:" +
+            Gladiator2.rage +
+            "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Rage: " +
+            Gladiator2.rage +
+            '</div>',
+        '</div>',
+        '</div>',
+        '</div>',
+        //Gladiator1 Attack Low
+        "<div class='row'>",
+        "<div class='col-lg-6'>",
+        "<div class='well'>",
+        '<h4>Attack Low: ' + Gladiator1.attackLow + '</h4></div>',
+        '</div>',
+        // Gladiator2 Attack Low
+        "<div class='col-lg-6'>",
+        "<div class='well'>",
+        '<h4> Attack Low: ' + Gladiator2.attackLow + '</h4></div>',
+        '</div>',
+        "<div class='row'></div>",
+        //Gladiator1 Attack High
+        "<div class='row'>",
+        "<div class='col-lg-6'>",
+        "<div class='well'>",
+        '<h4>Attack High: ' + Gladiator1.attackHigh + '</h4></div>',
+        '</div>',
+        // Gladiator2 Attack High
+        "<div class='col-lg-6'>",
+        "<div class='well'>",
+        '<h4> Attack High: ' + Gladiator2.attackHigh + '</h4></div>',
+        ,
+        //Gladiator1 Buttons
         '</div></div>'
     ].join(' ');
 }
