@@ -17,7 +17,7 @@ function Gladiator(name) {
         // This is how the player can heal if they have enough rage
         if (this.rage >= 15) {
             this.health += 15;
-            this.rage = 0;
+            this.rage -= 15;
         }
         return this.health;
     };
@@ -41,6 +41,98 @@ function Gladiator(name) {
     };
 }
 
+function Saiyan(name) {
+    this.level = 0;
+    this.health = 75; //Starting Point of health
+    this.rage = 50; //Starting Rage
+    this.attackLow = Math.floor(Math.random() * 50);
+    this.attackHigh = Math.floor(
+        // The highest the player attack can hit
+        Math.random() * (25 - this.attackLow) + (this.attackLow + 1)
+    );
+    this.heal = function() {
+        // This is how the player can heal if they have enough rage
+        if (this.rage >= 30) {
+            this.health += 30;
+            this.rage -= 30;
+        }
+        return this.health;
+    };
+    this.attack = function attack(defender) {
+        const d = getRandomIntInclusive(this.attackLow, this.attackHigh);
+        const randInt = getRandomIntInclusive(1, 100);
+        if (randInt < this.rage) {
+            this.rage = 0;
+            defender.health = defender.health - d * 2;
+        } else {
+            this.rage += 15;
+            defender.health -= d;
+        }
+    };
+    this.forms = {
+        0: {
+            title: 'Saiyan',
+            gif:
+                '/home/basecamp/Projects/Javascript/October/Gladiators/assets/Pictures/Base_Form.gif',
+            transformation: '../../assets/Pictures/Base_Form.gif'
+        },
+        1: {
+            title: 'Super Saiyan',
+            gif: '../../assets/Pictures/SS_Pic.gif',
+            transformation:
+                '../../assets/transformation/Super_Saiyan_Transfomation.gif'
+        },
+        2: {
+            title: 'Super Saiyan 2',
+            gif: '../../assets/Pictures/SS2_Pic.gif',
+            transformation: '../../assets/transformation/SS2_Transformation.gif'
+        },
+        3: {
+            title: 'SSG',
+            gif: '../../assets/Pictures/Super_Saiyan_God_Pic.gif',
+            transformation: '../../assets/transformation/'
+        },
+        4: {
+            title: 'SSGSS',
+            gif: '../../assets/Pictures/SSGSS_Pic.gif',
+            transformation:
+                '../../assets/transformation/Super_Saiyan_God_Super_Saiyan_Transformation.gif'
+        },
+        5: {
+            title: 'SSGSS Kioken',
+            gif: '../../assets/Pictures/SSGSS_Kioken_Pic.gif',
+            transformation:
+                '../../assets/transformation/SSGSS_Kioken_Transformation.gif'
+        },
+        6: {
+            title: 'Ultra Instinct',
+            gif: '../../assets/Pictures/Ultra_Instinct_Pic.gif',
+            transformation: '../../assets/Pictures/Ultra_Instinct_Pic.gif'
+        }
+    };
+    this.gifImage = this.forms[this.level].gif;
+
+    this.isDead = function() {
+        if (this.health <= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+    this.transform = function() {
+        if (this.rage >= 15) {
+            this.level += 1;
+            this.rage -= 15;
+
+            this.name = this.forms[this.level].title + ' ' + name; //Name of the person from the form
+            this.gifImage = this.forms[this.level].gif;
+            return this.name;
+        }
+    };
+    this.name = this.forms[this.level].title + ' ' + name; //Name of the person from the form
+}
+
 //________________________JQuery Below ___________________________________________________
 
 exports.Gladiator = Gladiator;
+exports.Saiyan = Saiyan;

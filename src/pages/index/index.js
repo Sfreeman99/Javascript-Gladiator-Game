@@ -26,11 +26,38 @@ function ProgressBar(attacker, defender) {
             .addClass('progress-bar-danger');
     }
 }
+// function Images(attacker, defender) {
+//     $('#attacker').attr('src', '../../assets/Pictures/Base_Form.gif');
+//     $('#defender').attr('src', '../../assets/Pictures/Base_Form.gif');
+// }
+
+function image_for(gladiator) {
+    if (gladiator.level === 0) {
+        return gladiator.forms[gladiator.level].gif;
+    } else if (gladiator.level === 1) {
+        return gladiator.forms[gladiator.level].gif;
+    } else if (gladiator.level === 2) {
+        return gladiator.forms[gladiator.level].gif;
+    } else if (gladiator.level === 3) {
+        return gladiator.forms[gladiator.level].gif;
+    } else if (gladiator.level === 4) {
+        return gladiator.forms[gladiator.level].gif;
+    } else if (gladiator.level === 5) {
+        return gladiator.forms[gladiator.level].gif;
+    } else if (gladiator.level === 6) {
+        return gladiator.forms[gladiator.level].gif;
+    } else {
+        return gladiator.forms[6].transformation;
+    }
+}
 
 function moves(attacker, defender) {
     ProgressBar(attacker, defender);
     if (attacker.rage < 15) {
         $('#heal').addClass('disabled');
+    }
+    if (attacker.rage < 15) {
+        $('#transform').addClass('disabled');
     }
     $('#attack').click(function() {
         attacker.attack(defender);
@@ -38,6 +65,10 @@ function moves(attacker, defender) {
     });
     $('#heal').click(function() {
         attacker.heal();
+        GameOver(attacker, defender);
+    });
+    $('#transform').click(function() {
+        attacker.transform();
         GameOver(attacker, defender);
     });
 }
@@ -70,19 +101,36 @@ function GameOver(attacker, defender) {
         ];
         app.html(end.join(' '));
     } else {
+        console.log(attacker);
+        console.log(defender);
         turn(attacker, defender);
     }
 }
 
 function view(attacker, defender) {
     return [
-        //Both fighters Names
         "<div class='container'>",
         "<div class='row'>",
+        //Attacker gif
+        "<div class='col-lg-6'>",
+        "<img id='attacker' src='" +
+            image_for(attacker) +
+            "' width='500px' height='250px'>",
+        '</div>',
+        //Defender gif
+        "<div class='col-lg-6'>",
+        "<img id='defender' src='" +
+            image_for(defender) +
+            "' width='500px' height='250px'>",
+        '</div>',
+        '</div>',
+        "<div class='row'>",
+        //Attacker Name
         "<div class='col-lg-6'><h3>Name: " + attacker.name + '</h3></div>',
+        //Defender Name
         "<div class='col-lg-6'><h3>Name: " + defender.name + '</h3></div>',
         '</div>',
-        //Both fighters health bars
+        //Attacker Health
         "<div class='row'>",
         "<div class='col-lg-6'>",
         "<div class='progress'>",
@@ -93,6 +141,7 @@ function view(attacker, defender) {
             '</div>',
         '</div>',
         '</div>',
+        //Defender Health
         "<div class='col-lg-6'>",
         "<div class='progress'>",
         "<div class='progress-bar progress-bar-success' id='Player2' role='progressbar' style='width:" +
@@ -103,7 +152,7 @@ function view(attacker, defender) {
         '</div>',
         '</div>',
         '</div>',
-        // both fighters rage bars
+        // Attacker Rage Bar
         "<div class='row'>",
         "<div class='col-lg-6'>",
         "<div class='progress'>",
@@ -114,6 +163,7 @@ function view(attacker, defender) {
             '</div>',
         '</div>',
         '</div>',
+        // Defender Rage
         "<div class='col-lg-6'>",
         "<div class='progress'>",
         "<div class='progress-bar progress-bar-danger' role='progressbar' style='width:" +
@@ -124,41 +174,43 @@ function view(attacker, defender) {
         '</div>',
         '</div>',
         '</div>',
-        //Attack Low
+        //Attacker Attack Low
         "<div class='row'>",
         "<div class='col-lg-6'>",
         "<div class='well'>",
         '<h4>Attack Low: ' + attacker.attackLow + '</h4></div>',
         '</div>',
+        // Defender Attack Low
         "<div class='col-lg-6'>",
         "<div class='well'>",
         '<h4> Attack Low: ' + defender.attackLow + '</h4></div>',
         '</div>',
         "<div class='row'></div>",
-        //Attack High
+        //Attacker Attack High
         "<div class='row'>",
         "<div class='col-lg-6'>",
         "<div class='well'>",
         '<h4>Attack High: ' + attacker.attackHigh + '</h4></div>',
         '</div>',
+        // Defender Attack High
         "<div class='col-lg-6'>",
         "<div class='well'>",
         '<h4> Attack High: ' + defender.attackHigh + '</h4></div>',
-        //
+        //Attacker Buttons
         "<div row><div class='col-lg-12' id='moves'>",
         attacker.name +
             " what do you want to do: &nbsp;<button class='btn btn-danger' id='attack'> Attack </button>",
         "<button class='btn btn-danger' id='heal'> Heal </button>",
+        "<button class='btn btn-danger' id='transform'> Transform </button>",
         '</div></div>'
     ].join(' ');
 }
 function main() {
     $('#submit').click(function() {
-        const Player1 = new core.Gladiator($('#Player1').val());
-        const Player2 = new core.Gladiator($('#Player2').val());
-        turn(Player1, Player2);
+        const Player1 = new core.Saiyan($('#Player1').val()); // Get Player One Name
+        const Player2 = new core.Saiyan($('#Player2').val()); // Get Player Two Name
+        turn(Player1, Player2); //Start the Game
     });
-    // $('#app').html(view(Player1, Player2));
 }
 
 $(main);
