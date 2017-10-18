@@ -123,10 +123,10 @@ function Saiyan(name) {
         if (this.rage >= 15) {
             this.level += 1;
             this.rage -= 15;
-
+            this.attackLow += 10;
+            this.attackHigh += 10;
             this.name = this.forms[this.level].title + ' ' + name; //Name of the person from the form
             this.gifImage = this.forms[this.level].gif;
-            return this.name;
         }
     };
     this.name = this.forms[this.level].title + ' ' + name; //Name of the person from the form

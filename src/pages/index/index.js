@@ -87,6 +87,10 @@ function turn(Gladiator1, Gladiator2) {
 
 function GameOver(attacker, defender) {
     if (defender.isDead() === true) {
+        var finishMove = [
+            '<h3> Finishing Move </h3>',
+            "<img src='../../assets/ending/end_game.gif' width='75%' height='75%'> "
+        ];
         var end = [
             "<div class='row'>",
             "<h1 style='color: Green; text-align: center'> Winner: " +
@@ -99,10 +103,11 @@ function GameOver(attacker, defender) {
                 ' </h1>',
             '</div>'
         ];
-        app.html(end.join(' '));
+        app.html(finishMove.join(' '));
+        setTimeout(function() {
+            app.html(end.join(' '));
+        }, 3500);
     } else {
-        console.log(attacker);
-        console.log(defender);
         turn(attacker, defender);
     }
 }
