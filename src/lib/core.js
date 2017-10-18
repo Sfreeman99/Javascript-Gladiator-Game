@@ -43,7 +43,7 @@ function Gladiator(name) {
 
 function Saiyan(name) {
     this.level = 0;
-    this.health = 75; //Starting Point of health
+    this.health = 500; //Starting Point of health
     this.rage = 50; //Starting Rage
     this.attackLow = Math.floor(Math.random() * 50);
     this.attackHigh = Math.floor(
@@ -122,6 +122,7 @@ function Saiyan(name) {
     this.transform = function() {
         if (this.rage >= 15) {
             this.level += 1;
+            this.health += 50;
             this.rage -= 15;
             this.attackLow += 10;
             this.attackHigh += 10;

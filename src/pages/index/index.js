@@ -140,8 +140,10 @@ function view(attacker, defender) {
         "<div class='col-lg-6'>",
         "<div class='progress'>",
         "<div class='progress-bar progress-bar-success' id='Player1' role='progressbar' style='width:" +
-            attacker.health +
-            "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Health: " +
+            attacker.health / 5 +
+            "%' aria-valuenow='" +
+            attacker.health / 5 +
+            "' aria-valuemin='0' aria-valuemax='500'> Health: " +
             attacker.health +
             '</div>',
         '</div>',
@@ -150,8 +152,10 @@ function view(attacker, defender) {
         "<div class='col-lg-6'>",
         "<div class='progress'>",
         "<div class='progress-bar progress-bar-success' id='Player2' role='progressbar' style='width:" +
-            defender.health +
-            "%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'> Health: " +
+            defender.health / 5 +
+            "%' aria-valuenow='" +
+            defender.health / 5 +
+            "' aria-valuemin='0' aria-valuemax='500'> Health: " +
             defender.health +
             '</div>',
         '</div>',
