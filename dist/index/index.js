@@ -10698,8 +10698,7 @@ function Saiyan(name) {
     this.forms = {
         0: {
             title: 'Saiyan',
-            gif:
-                '/home/basecamp/Projects/Javascript/October/Gladiators/assets/Pictures/Base_Form.gif',
+            gif: '../../assets/Pictures/Base_Form.gif',
             transformation: '../../assets/Pictures/Base_Form.gif'
         },
         1: {
