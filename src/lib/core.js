@@ -69,13 +69,6 @@ function Saiyan(name) {
     this.attack = function attack(defender) {
         const d = getRandomIntInclusive(this.attackLow, this.attackHigh);
         const randInt = getRandomIntInclusive(1, 100);
-        if (randInt < this.rage) {
-            this.rage = 0;
-            defender.health = defender.health - d * 2;
-        } else {
-            this.rage += 15;
-            defender.health -= d;
-        }
     };
     this.forms = {
         0: {
@@ -145,4 +138,4 @@ function Saiyan(name) {
 //________________________JQuery Below ___________________________________________________
 
 exports.Gladiator = Gladiator;
-exports.Saiyan = Saiyan;
+expors.Saiyan = Saiyan;

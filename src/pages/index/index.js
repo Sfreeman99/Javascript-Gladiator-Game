@@ -4,32 +4,36 @@ const app = $('#app');
 var turnBool = true;
 
 function ProgressBar(attacker, defender) {
-    if (attacker.health < 50 && attacker.health >= 25) {
+    const attackerHealth = Math.floor(
+        attacker.health / attacker.maxHealth * 100
+    );
+    const defenderHealth = Math.floor(
+        defender.health / defender.maxHealth * 100
+    );
+    console.log('P1: ' + attackerHealth);
+    console.log('P2: ' + defenderHealth);
+    if (attackerHealth < 50 && attackerHealth >= 25) {
         $('#Player1')
             .removeClass('progress-bar-success')
             .addClass('progress-bar-warning');
     }
-    if (attacker.health < 25) {
+    if (attackerHealth < 25) {
         $('#Player1')
             .removeClass('progress-bar-success')
             .addClass('progress-bar-danger');
     }
 
-    if (defender.health < 50 && defender.health >= 25) {
+    if (defenderHealth < 50 && defenderHealth >= 25) {
         $('#Player2')
             .removeClass('progress-bar-success')
             .addClass('progress-bar-warning');
     }
-    if (defender.health < 25) {
+    if (defenderHealth < 25) {
         $('#Player2')
             .removeClass('progress-bar-success')
             .addClass('progress-bar-danger');
     }
 }
-// function Images(attacker, defender) {
-//     $('#attacker').attr('src', '../../assets/Pictures/Base_Form.gif');
-//     $('#defender').attr('src', '../../assets/Pictures/Base_Form.gif');
-// }
 
 function image_for(gladiator) {
     if (gladiator.level === 0) {
@@ -101,14 +105,12 @@ function moves(Gladiator1, Gladiator2) {
 }
 function turn(Gladiator1, Gladiator2) {
     if (turnBool === true) {
-        ProgressBar(Gladiator1, Gladiator2);
-
         app.html(view(Gladiator1, Gladiator2) + buttons(Gladiator1));
+        ProgressBar(Gladiator1, Gladiator2);
         moves(Gladiator1, Gladiator2);
     } else {
-        ProgressBar(Gladiator1, Gladiator2);
-
         app.html(view(Gladiator1, Gladiator2) + buttons(Gladiator2));
+        ProgressBar(Gladiator1, Gladiator2);
         moves(Gladiator1, Gladiator2);
     }
 }
@@ -276,6 +278,7 @@ function main() {
     $('#submit').click(function() {
         const Player1 = new core.Saiyan($('#Player1').val()); // Get Player One Name
         const Player2 = new core.Saiyan($('#Player2').val()); // Get Player Two Name
+        // const History = [];
         turn(Player1, Player2); //Start the Game
     });
 }

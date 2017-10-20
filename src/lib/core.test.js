@@ -51,3 +51,17 @@ describe('Gladiator health', function() {
         expect(player.isDead()).toEqual(false);
     });
 });
+describe('Saiyan Standard', function() {
+    test('health to first equal max health', function() {
+        var P1 = new core.Saiyan('foo');
+        expect(P1.health).toEqual(P1.maxHealth);
+    });
+    test('has starting rage of 50', function() {
+        var p = new core.Saiyan('foo');
+        expect(p.rage).toEqual(50);
+    });
+    test('attack low is lower than attack high', function() {
+        var p = new core.Saiyan('foo');
+        expect(p.attackLow).toBeLessThan(p.attackHigh);
+    });
+});
