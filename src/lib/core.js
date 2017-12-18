@@ -1,5 +1,5 @@
 const $ = require('jquery');
-// get a random number between the max and min of a number
+// get a random number between the max and min of a number.
 function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }

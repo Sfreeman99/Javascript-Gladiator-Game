@@ -276,7 +276,7 @@ function main() {
     $('#submit').click(function() {
         const Player1 = new core.Saiyan($('#Player1').val()); // Get Player One Name
         const Player2 = new core.Saiyan($('#Player2').val()); // Get Player Two Name
-        turn(Player1, Player2); //Start the Game
+        turn(Player1, Player2); //Start the Game.
     });
 }
 
